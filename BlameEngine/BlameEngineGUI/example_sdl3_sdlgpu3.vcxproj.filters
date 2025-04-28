@@ -25,6 +25,12 @@
     <ClCompile Include="..\..\imgui_widgets.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
+    <ClCompile Include="BrowseWindow.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\imgui_stdlib.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\backends\imgui_impl_sdlgpu3.h">
@@ -45,6 +51,12 @@
     <ClInclude Include="..\..\imgui_internal.h">
       <Filter>imgui</Filter>
     </ClInclude>
+    <ClInclude Include="BrowseWindow.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\imgui_stdlib.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.txt" />
@@ -55,6 +67,9 @@
     </Filter>
     <Filter Include="sources">
       <UniqueIdentifier>{ef84458b-039a-4902-8455-4e33df5a8578}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers">
+      <UniqueIdentifier>{cc90d4c5-b359-4b8e-af43-54801b5403c8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
