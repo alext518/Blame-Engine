@@ -1,5 +1,6 @@
 #include "imgui.h"
 #include "imgui_stdlib.h"
+#include "NewProject.h"
 #include <string>
 ImGuiWindowFlags browse_window_flags =
     ImGuiWindowFlags_NoResize |
@@ -8,6 +9,7 @@ ImGuiWindowFlags browse_window_flags =
 
 void BrowseWindow(bool* p_open)
 {
+    static NewProject newProject;
     float createProjWidth = 800;
     float createProjHeight = 600;
     ImVec2 createProjSize = ImVec2(createProjWidth, createProjHeight);
@@ -19,8 +21,8 @@ void BrowseWindow(bool* p_open)
         return;
     }
 
-    static std::string projName = "";
-    static std::string projPath = "";
+    static std::string projName = newProject.GetName(); // Get the name of the project
+    static std::string projPath = newProject.GetPath(); // Get the path of the project
 
     // Set the window position to the center of the screen
     ImVec2 windowSize = ImGui::GetWindowSize();
@@ -34,7 +36,8 @@ void BrowseWindow(bool* p_open)
 
     // Calculate the total width of the buttons and spacing
     float buttonWidth = 120.0f; // Button width
-    float buttonHeight = 0.0f; // Button height (0.0f for auto height)
+    float buttonHeight = 30.0f; // Button height (0.0f for auto height)
+    static ImVec2 buttonSize = ImVec2(buttonWidth, buttonHeight);
     float spacing = ImGui::GetStyle().ItemSpacing.x;
     float totalWidth = (buttonWidth * 2) + spacing;
 
@@ -44,7 +47,7 @@ void BrowseWindow(bool* p_open)
     ImGui::SetCursorPosX(offsetX);
 
     // Create buttons
-    if (ImGui::Button("Open Project", ImVec2(buttonWidth, buttonHeight)))
+    if (ImGui::Button("Open Project", buttonSize))
     {
         createProj = false;
         openProj = true;
@@ -52,7 +55,7 @@ void BrowseWindow(bool* p_open)
 
     ImGui::SameLine();
 
-    if (ImGui::Button("Create Project", ImVec2(buttonWidth, buttonHeight)))
+    if (ImGui::Button("Create Project", buttonSize))
     {
         openProj = false;
         createProj = true;
@@ -62,19 +65,47 @@ void BrowseWindow(bool* p_open)
     
     if (openProj)
     {
-        // Set child window background color to light blue
-        ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.2f, 0.6f, 0.8f, 1.0f));
+        // Set child window background color to black
+        ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.0f, 0.0f, 0.0f, 1.0f));
 
-        // Open project logic here
+        // Create project logic here
         ImGui::BeginChild("OpenProjectChild", ImGui::GetContentRegionAvail());
-        ImGui::Text("Open Project Child Window");
+        float listbox_height = 275;
+        float totalWidth_listboxes = 195 + 400 + spacing;
+        float centerX_listboxes = (createProjWidth - totalWidth_listboxes) * 0.5f;
 
+        //ImGui::SetNextWindowPos(ImVec2(0, 150));
+        ImGui::SetCursorPosY(35);
+        ImGui::SetCursorPosX(centerX_listboxes);
+        ImGui::BeginChild("listbox_projets", ImVec2(195, listbox_height), ImGuiChildFlags_Borders);
 
+        // End listbox
+        ImGui::EndChild();
+
+        ImGui::SameLine();
+
+        ImGui::BeginChild("Listbox_screenshot_display", ImVec2(400, listbox_height), ImGuiChildFlags_Borders);
+
+        // End Screenshot display window
+        ImGui::EndChild();
+
+        // Center buttons
+        ImGui::SetCursorPosX(offsetX);
+        if (ImGui::Button("Open", buttonSize))
+        {
+
+        }
+
+        ImGui::SameLine();
+
+        if (ImGui::Button("Exit", buttonSize))
+        {
+
+        }
 
         // End Open Project Child
         ImGui::EndChild();
 
-        // Pop Style color
         ImGui::PopStyleColor();
     }
 
@@ -84,7 +115,7 @@ void BrowseWindow(bool* p_open)
         ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.0f, 0.0f, 0.0f, 1.0f));
         
         // Create project logic here
-        ImGui::BeginChild("CreateProjectChild", ImGui::GetContentRegionAvail());
+        ImGui::BeginChild("CreateProjectChild", ImGui::GetContentRegionAvail(), ImGuiChildFlags_Borders);
         float listbox_height = 275;
         float totalWidth_listboxes = 195 + 400 + spacing;
         float centerX_listboxes = (createProjWidth - totalWidth_listboxes) * 0.5f;
@@ -107,8 +138,9 @@ void BrowseWindow(bool* p_open)
         // Create name input text box
         ImGui::SetCursorPosX(centerX_listboxes);
         ImGui::Text("Name:"); ImGui::SameLine();
-        ImGui::InputText("##Name", &projName);
+        ImGui::InputText("##Name", &projName, ImGuiInputTextFlags_AutoSelectAll);
         float inputTextBoxX = ImGui::GetItemRectSize().x;
+        newProject.SetName(projName); // Set the name of the project
 
         // Get size of browse button using font size of label
         std::string browseButtonLabel = "Browse";   // Set label name
@@ -119,7 +151,25 @@ void BrowseWindow(bool* p_open)
         ImGui::Text("Path:"); ImGui::SameLine();
         ImGui::SetNextItemWidth(inputTextBoxX - browseButtonSize);
         ImGui::InputText("##Path", &projPath); ImGui::SameLine();
+        newProject.SetPath(projPath); // Set the path of the project
         ImGui::Button("Browse");
+
+        // Create a little space between input boxes and buttons
+        ImGui::Dummy(ImVec2(0, 50));
+
+        // Center buttons
+        ImGui::SetCursorPosX(offsetX);
+        if (ImGui::Button("Create", buttonSize))
+        {
+
+        }
+
+        ImGui::SameLine();
+
+        if (ImGui::Button("Exit",buttonSize))
+        {
+            
+        }
 
         // End Create Project Child
         ImGui::EndChild();
@@ -127,7 +177,7 @@ void BrowseWindow(bool* p_open)
         ImGui::PopStyleColor();
     }
 
-    ImGui::Dummy(ImVec2(0.0f, ImGui::GetContentRegionAvail().y - 30.0f)); // Dummy space to move anything below the bottom
+    //ImGui::Dummy(ImVec2(0.0f, ImGui::GetContentRegionAvail().y - 30.0f)); // Dummy space to move anything below the bottom
 
     // End Browse Window
     ImGui::End();

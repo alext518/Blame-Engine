@@ -110,6 +110,7 @@
       <AdditionalIncludeDirectories>..\..;..\..\backends;%SDL3_DIR%\include;$(VcpkgCurrentInstalledDir)include\SDL3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -174,6 +175,8 @@
     <ClCompile Include="..\..\backends\imgui_impl_sdl3.cpp" />
     <ClCompile Include="BrowseWindow.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="NewProject.cpp" />
+    <ClCompile Include="ProjectTemplate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\backends\imgui_impl_sdlgpu3.h" />
@@ -184,6 +187,8 @@
     <ClInclude Include="..\..\backends\imgui_impl_sdl3.h" />
     <ClInclude Include="..\..\imgui_stdlib.h" />
     <ClInclude Include="BrowseWindow.h" />
+    <ClInclude Include="NewProject.h" />
+    <ClInclude Include="ProjectTemplate.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.txt" />

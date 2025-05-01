@@ -31,6 +31,8 @@
     <ClCompile Include="..\..\imgui_stdlib.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
+    <ClCompile Include="NewProject.cpp" />
+    <ClCompile Include="ProjectTemplate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\backends\imgui_impl_sdlgpu3.h">
@@ -57,6 +59,8 @@
     <ClInclude Include="..\..\imgui_stdlib.h">
       <Filter>imgui</Filter>
     </ClInclude>
+    <ClInclude Include="NewProject.h" />
+    <ClInclude Include="ProjectTemplate.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.txt" />
